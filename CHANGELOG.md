@@ -1,6 +1,10 @@
 
 
 ##CURRENT
+* RESKC-1831: NSF Cover Page 1.7
+  * Gayathri Athreya on Thu, 5 Jan 2017 14:32:44 -0700 [View Commit](../../commit/a9cd17e04165acb81b64f7da9ebd2de0546df645)
+
+##coeus-s2sgen-1612.0012
 * RESKC-1729: update coeus-api, aligning dependencies with the research project
   * Travis Schneeberger on Thu, 15 Dec 2016 15:36:13 -0500 [View Commit](../../commit/948e7856e9e64d494f4f4ffd199d6d803c6d6ff2)
 
