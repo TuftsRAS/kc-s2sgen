@@ -1,6 +1,10 @@
 
 
 ##CURRENT
+* RESKC-1956: Fixing error messages for NSF 1.7 CP
+  * Gayathri Athreya on Wed, 18 Jan 2017 12:50:02 -0700 [View Commit](../../commit/efe49d9cd12b49ca3056b1b6b00c98528a8c3ecb)
+
+##coeus-s2sgen-1701.0001
 * RESKC-1831: NSF Cover Page 1.7
   * Gayathri Athreya on Thu, 5 Jan 2017 14:32:44 -0700 [View Commit](../../commit/a9cd17e04165acb81b64f7da9ebd2de0546df645)
 
