@@ -110,35 +110,48 @@ public class NSFCoverPageV1_7Generator extends NSFCoverPageBaseGenerator {
 
     private void setOtherInfo(NSFCoverPage17Document.NSFCoverPage17 nsfCoverPage17) {
         OtherInfo otherInfo = OtherInfo.Factory.newInstance();
+
         PIInfo pInfo = PIInfo.Factory.newInstance();
-        //setFundingMechanism(nsfCoverPage17, null);
-        for (AnswerContract questionnaireAnswer : getPropDevQuestionAnswerService().getQuestionnaireAnswers(pdDoc.getDevelopmentProposal().getProposalNumber(), getNamespace(), getFormName())) {
+        final List<? extends AnswerContract> questionnaireAnswers = getPropDevQuestionAnswerService().getQuestionnaireAnswers(pdDoc.getDevelopmentProposal().getProposalNumber(), getNamespace(), getFormName());
+        int unansweredQuestions = questionnaireAnswers.size();
+
+        for (AnswerContract questionnaireAnswer : questionnaireAnswers) {
             String answer = questionnaireAnswer.getAnswer();
             int questionId = questionnaireAnswer.getQuestionNumber();
-
             if (answer != null) {
                 switch (questionId) {
                     case QUESTION_CURRENT_PI:
                         pInfo.setIsCurrentPI(answer.equals(YnqConstant.YES.code()) ? YesNoDataType.Y_YES : YesNoDataType.N_NO);
+                        unansweredQuestions--;
                         break;
                     case QUESTION_BEGIN_INVESTIGATOR:
                         otherInfo.setIsBeginInvestigator(answer.equals(YnqConstant.YES.code()) ? YesNoDataType.Y_YES : YesNoDataType.N_NO);
+                        unansweredQuestions--;
                         break;
                     case QUESTION_ACCOMPLISHMENT_RENEWAL:
                         otherInfo.setIsAccomplishmentRenewal(answer.equals(YnqConstant.YES.code()) ? YesNoDataType.Y_YES : YesNoDataType.N_NO);
+                        unansweredQuestions--;
                         break;
                     case FUNDING_MECHANISM_QUESTION:
                         setFundingMechanism(nsfCoverPage17, answer);
+                        unansweredQuestions--;
                         break;
                     case LOBBYING_ACTIVITIES_QUESTION:
                         otherInfo.setIsDisclosureLobbyingActivities(answer.equals(YnqConstant.YES.code()) ? YesNoDataType.Y_YES : YesNoDataType.N_NO);
+                        unansweredQuestions--;
                     default:
                         break;
                 }
             }
         }
-        nsfCoverPage17.setPIInfo(pInfo);
-        nsfCoverPage17.setOtherInfo(otherInfo);
+        if (unansweredQuestions != 0) {
+            nsfCoverPage17.setPIInfo(null);
+            nsfCoverPage17.setOtherInfo(null);
+        }
+        else {
+            nsfCoverPage17.setPIInfo(pInfo);
+            nsfCoverPage17.setOtherInfo(otherInfo);
+        }
     }
 
     private void setFundingMechanism(NSFCoverPage17 nsfCoverPage17, String answer) {
@@ -165,7 +178,10 @@ public class NSFCoverPageV1_7Generator extends NSFCoverPageBaseGenerator {
             fundingMechanism = FundingMechanism.TRAVEL;
         } else if (StringUtils.equalsIgnoreCase(answer, FundingMechanism.CENTER_RESEARCH_INFRASTRUCTURE.toString())) {
             fundingMechanism = FundingMechanism.CENTER_RESEARCH_INFRASTRUCTURE;
-        } else {
+        } else if (StringUtils.equalsIgnoreCase(answer, FundingMechanism.RESEARCH.toString())) {
+            fundingMechanism = FundingMechanism.RESEARCH;
+        }
+        else {
             fundingMechanism = null;
         }
         nsfCoverPage17.setFundingMechanism(fundingMechanism);
