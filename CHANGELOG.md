@@ -1,6 +1,11 @@
 
 
 ##CURRENT
+* RESKC-1936: fix incorrectly mapped activity title;
+  * RESKC-2000: fix issue with country names that contain lowercase chars in global schema
+  * Terry Durkin on Fri, 3 Feb 2017 14:55:09 -0500 [View Commit](../../commit/84cc2619e8332b03fd25d61609c12b079c451ea7)
+
+##coeus-s2sgen-1701.0002
 * RESKC-1956: Fixing error messages for NSF 1.7 CP
   * Gayathri Athreya on Wed, 18 Jan 2017 12:50:02 -0700 [View Commit](../../commit/efe49d9cd12b49ca3056b1b6b00c98528a8c3ecb)
 
