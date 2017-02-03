@@ -187,11 +187,11 @@ public class FormGeneratorServiceImpl implements FormGeneratorService {
         GrantApplicationDocument.GrantApplication grantApplication = GrantApplicationDocument.GrantApplication.Factory.newInstance();
         grantApplication.setForms(forms);
         GrantSubmissionHeaderDocument.GrantSubmissionHeader grantSubmissionHeader = GrantSubmissionHeaderDocument.GrantSubmissionHeader.Factory.newInstance();
-        grantSubmissionHeader.setActivityTitle(pdDoc.getDevelopmentProposal().getProgramAnnouncementTitle());
         grantSubmissionHeader.setOpportunityTitle(pdDoc.getDevelopmentProposal().getProgramAnnouncementTitle());
         grantSubmissionHeader.setAgencyName(pdDoc.getDevelopmentProposal().getSponsor().getSponsorName());
         if(pdDoc.getDevelopmentProposal().getCfdaNumber()!=null){
             grantSubmissionHeader.setCFDANumber(pdDoc.getDevelopmentProposal().getCfdaNumber());
+            grantSubmissionHeader.setActivityTitle(pdDoc.getDevelopmentProposal().getS2sOpportunity().getCfdaDescription());
         }
         S2sOpportunityContract s2sOpportunity = pdDoc.getDevelopmentProposal().getS2sOpportunity();
         if (s2sOpportunity.getCompetetionId() != null) {

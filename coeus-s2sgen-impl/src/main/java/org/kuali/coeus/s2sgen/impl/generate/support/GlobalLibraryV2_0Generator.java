@@ -68,6 +68,14 @@ public class GlobalLibraryV2_0Generator {
 			countryDetail.append(country.getName().toUpperCase());
 			countryCodeDataType = CountryCodeDataType.Enum
 					.forString(countryDetail.toString());
+			if (countryCodeDataType == null) {
+				countryDetail = new StringBuilder();
+				countryDetail.append(country.getAlternateCode());
+				countryDetail.append(": ");
+				countryDetail.append(country.getName());
+				countryCodeDataType = CountryCodeDataType.Enum
+						.forString(countryDetail.toString());
+			}
 		}
 		return countryCodeDataType;
 	}
