@@ -275,8 +275,14 @@ public class RRKeyPersonExpandedV2_0Generator extends
         }
         else
         {
-            DevelopmentProposalContract developmentProposal = pdDoc.getDevelopmentProposal();
-            profile.setDepartmentName(StringUtils.substring(developmentProposal.getOwnedByUnit().getUnitName(), 0, DEPARTMENT_NAME_MAX_LENGTH));
+            if (PI.getRolodexId() != null && PI.getDirectoryDepartment() != null) {
+                // If this is a non-employee (rolodex not null), pull the Directory Department field
+                // (from PD->Key Personnel->Extended Details tab), if a value has been entered there
+                profile.setDepartmentName(StringUtils.substring(PI.getDirectoryDepartment(), 0, DEPARTMENT_NAME_MAX_LENGTH));
+            } else {
+                DevelopmentProposalContract developmentProposal = pdDoc.getDevelopmentProposal();
+                profile.setDepartmentName(StringUtils.substring(developmentProposal.getOwnedByUnit().getUnitName(), 0, DEPARTMENT_NAME_MAX_LENGTH));
+            }
         }
 	}
 
@@ -461,6 +467,7 @@ public class RRKeyPersonExpandedV2_0Generator extends
 	private void setProjectRoleCategoryToProfile(ProposalPersonContract keyPerson,
 			Profile profileKeyPerson) {
 		if (keyPerson.getRolodexId() != null 
+				&& keyPerson.getProjectRole() != null // Avoid a null pointer exception on the following check
 				&& keyPerson.getProjectRole().equals(ProjectRoleDataType.PD_PI.toString())) {
 			profileKeyPerson.setProjectRole(ProjectRoleDataType.PD_PI);
 		} else {
